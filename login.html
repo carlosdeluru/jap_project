@@ -6,6 +6,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="1039999945501-hlqciusbqmr75itre18sng88a2pnh2tj.apps.googleusercontent.com">
   <title>eMercado - Todo lo que busques está aquí</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
@@ -23,7 +26,7 @@
       display: flex;
       -ms-flex-align: center;
       align-items: center;
-      padding-top: 40px;
+      padding-top: 0px;
       padding-bottom: 40px;
       background-color: #f5f5f5;
     }
@@ -34,18 +37,40 @@
       padding: 15px;
       margin: auto;
     }
+    img{
+      height: 300px;
+    }
   </style>
 </head>
 
 <body class="text-center">
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
+  <div class="container">
+  <img src="./img/login.png" alt="login">
+
+  <div class="container d-flex justify-content-center">
+    <!--<div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
       <h4 class="alert-heading">¡A trabajar! :)</h4>
       <p>Esta sección corresponde a: Entrega 1 (Fecha de entrega: 08/08/2021).</p>
       <hr>
       <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-    </div>
+    </div>-->
+  <div class="card border-primary " style="width:20rem; position: relative">
+    <form action="" id="loginFormId">
+      <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
+      <label for="inputUser" class="form-label">Username:</label>
+      <input type="text" id="inputUser" class="form-control mb-3 " placeholder="Enter Username" required autofocus>
+      <label for="inputPassword" class="form-label">Password:</label>
+      <input type="password" id="inputPassword" class="form-control mb-3" placeholder="Password" required>
+      <div class="container d-flex justify-content-center">
+        <button class="btn  btn-primary  mb-3 mx-3" type="submit" id="loginIdBtn">Login</button>
+        <div class="g-signin2" data-onsuccess="onSignIn">Sing in with google</div>
+      </div>  
+    </form>
+
   </div>
+  </div>
+  </div>
+
 
   <script src="js/init.js"></script>
   <script src="js/login.js"></script>
