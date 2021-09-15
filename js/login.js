@@ -9,9 +9,10 @@ document.addEventListener("DOMContentLoaded", function(e){
     document.getElementById("loginFormId").addEventListener("submit", (e) => {
         e.preventDefault()
         const user = document.getElementById("inputUser").value
-        setCookie("loged","true",20)
+        //setCookie("loged","true",20)
         localStorage.setItem("user",String(user))
-        //document.cookie = `username=${user};`
+        sessionStorage.setItem("loged","true")
+        
         
         alert("Welcome to e-mercado: " + user)
         window.location.replace("index.html")
