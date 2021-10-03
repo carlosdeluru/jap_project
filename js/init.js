@@ -7,30 +7,6 @@ const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/pro
 const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 
-//funcion para implementar la cookie 
-// function setCookie(cname, cvalue, min) {
-//   const d = new Date();
-//   d.setTime(d.getTime() + (min * 60 * 1000));
-//   let expires = "expires="+d.toUTCString();
-//   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-// }
-
-// //funcion para leer la cookie
-// function getCookie(cname) {
-//   let name = cname + "=";
-//   let decodedCookie = decodeURIComponent(document.cookie);
-//   let ca = decodedCookie.split(';');
-//   for(let i = 0; i <ca.length; i++) {
-//     let c = ca[i];
-//     while (c.charAt(0) == ' ') {
-//       c = c.substring(1);
-//     }
-//     if (c.indexOf(name) == 0) {
-//       return c.substring(name.length, c.length);
-//     }
-//   }
-//   return null;
-// } 
 
 //funcion para extraer la ubicacion actual de la URL 
 //y extraer el nombre del archivo. es decir: "login.html", "index.html"... 
@@ -41,15 +17,30 @@ let currentLocation = () => {
 
 //funcion que chequea el Cookie si el usiario esta logeado cada vez que carga una nueva pagina.
 // Si no esta logeado y no esta ubicado en login.html lo redirige a la misma con un alert
-let login = () => { 
+let checkLogin = () => { 
   
   if(sessionStorage.getItem("loged") === null && (currentLocation() != "login.html")){
     window.location.replace("login.html")
     alert("Please, Login")
   }else{
-    let text = `Welcome: ${localStorage.getItem("user")}`;
-    document.getElementById("userId").innerHTML = text;
+    document.getElementById("userId").innerHTML = `<div class="dropdown">
+    <button class="btn btn-primary  dropdown-toggle fas fa-user" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         ${localStorage.getItem("user")}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+      <a class="dropdown-item" href="cart.html">Mi carrito</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a>
+    </div>
+  </div>`;
   }
+}
+
+function cerrarSesion(){
+  sessionStorage.removeItem("loged");
+  localStorage.removeItem("user")
+  window.location.replace("login.html")
 }
 
 var showSpinner = function(){
@@ -90,7 +81,7 @@ var getJSONData = function(url){
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
 
-login()
+checkLogin()
 
 });
 

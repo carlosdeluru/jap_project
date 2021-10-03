@@ -3,6 +3,15 @@ let productInfoObj = {}
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+    fetchData()
+    
+    document.getElementById("postCommentId").addEventListener("submit", (e) => {postComment(e)})
+    
+    modalFunction()
+     
+});
+
+function fetchData(){
     getJSONData(PRODUCT_INFO_URL)
     .then(function(resultObj){
         if (resultObj.status === "ok"){
@@ -15,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function(e){
         if(result.status === "ok"){
             showRelatedProducts(result.data,productInfoObj)
         }
-
     })
 
     //Fetchear comentarios y mostrarlos
@@ -25,32 +33,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             showComments(result.data)
         }
     })
-    //eventListener del subbmit para el comentario
-    document.getElementById("postCommentId").addEventListener("submit", (e) => {
-
-        e.preventDefault()
-
-        let score = document.getElementById("starsId").value 
-        let comment = document.getElementById("commentId").value 
-        
-        if(comment.replace(/\s/g, "") === ""){
-            
-            let htmlContentToAppend =   `<div class="border border-danger bg-danger text-white p-3 mt-1 mb-1 text-center" >
-                                    Por favor, escribe un comentario valido
-                                 </div>`;
-            
-            let div = document.createElement("div")
-            div.innerHTML = htmlContentToAppend;
-            document.getElementById("errorMess").innerHTML = htmlContentToAppend;
-
-        }else{
-            postComment(score,comment)
-            document.getElementById("commentId").value = ""
-            document.getElementById("errorMess").innerHTML = ""
-        }
-    })
-    
-});
+}
 
 
 //Muestra parte principal con galeria de imagenes y un card con info del producto
@@ -58,16 +41,19 @@ function ShowProduct(productObj){
     let htmlCardToAppend = ""
     let htmlMainImgToAppend = ""
     let htmlImgGroupToAppend = ""
+    let imgCarrouselToapend = ""
 
 
     let card = document.getElementById("insertProductCard");
     let mainImg = document.getElementById("mainImgId");
     let imgGroup = document.getElementById("imgGroup");
+    let carouselImg = document.getElementById("carouselId");
 
-    let {name,description, cost, currency,soldCount,category,images,relatedProducts} = productObj
+
+    let {name,description, cost, currency,soldCount,category,images} = productObj
     showDescription(description)
     htmlCardToAppend = `<div class="card h-100" >
-    <small class="text-muted mb-3 mt-3 ml-3">${category} autos | Vendidos ${soldCount} </small>
+    <small class="text-muted mb-3 mt-3 ml-3">   Categoria ${category} | Vendidos ${soldCount} </small>
     <div class="card-body">
       <h3 class="card-text font-weight-bold mb-5">${name}</h3>
       <p class="card-text font-weight-bold "> ${currency} ${cost}</p>
@@ -85,32 +71,42 @@ function ShowProduct(productObj){
     </div>`
 
     htmlMainImgToAppend = ` <img class="d-block w-100 rounded" id="mainImg" src="./${images[0]}">`
-
+    
+    let counter = 0;
     for(image of images){
         htmlImgGroupToAppend += `<img class="d-block w-100 rounded mb-3 " onmouseenter="changeMainImage(this)"
-        onmouseleave="mouseLeave(this)" src="./${image}">`
+        onmouseleave="classList.remove('border','border-primary')" src="./${image}">`
 
+        if(counter === 0){
+                imgCarrouselToapend += `<div class="carousel-item active">
+                                            <img src="./${image}" class="d-block w-100" alt="...">
+                                        </div>`
+                counter++
+        }else{
+                imgCarrouselToapend += `<div class="carousel-item ">
+                                            <img src="./${image}" class="d-block w-100" alt="...">
+                                        </div>`
+        }
     }
     imgGroup.innerHTML = htmlImgGroupToAppend;
     mainImg.innerHTML = htmlMainImgToAppend;
     card.innerHTML = htmlCardToAppend;
-
-
+    carouselImg.innerHTML = imgCarrouselToapend;
 }
 
-//muestra productos relacionados
+//muestro productos relacionados
 function showRelatedProducts(productsArray,productObj){
     let htmlToAppend = "";
     
     for(item of productObj.relatedProducts){
         
         if(productsArray[item] !== undefined){
-            let {name,description,cost,currency,imgSrc,soldCount} = productsArray[item];
+            let {name,description,cost,currency,imgSrc} = productsArray[item];
 
-            htmlToAppend += `<div class="card ml-2" style="width: 18rem;"  onmouseenter="mouseEnter(this)"
-            onmouseleave="mouseLeave(this)">
-            <img src="./${imgSrc}" class="card-img-top" alt="Fiat way">
-            <small class="text-muted mb-3 mt-3 ml-3"> Vendidos ${soldCount} </small>
+            htmlToAppend += `<div class="card m-2 p-0" style="width: 18rem;"  onmouseenter="classList.add('border','border-primary')"
+            onmouseleave="classList.remove('border','border-primary');">
+            <img src="./${imgSrc}" class="card-img-top" alt="${name}">
+            
             <div class="card-body">
               <h5 class="card-title">${name}</h5>
               <p class="card-text">${description}</p>
@@ -169,7 +165,27 @@ function showComments(comments){
 }
 
 //agrega el nuevo comentario
-function postComment(score,comment){
+function postComment(e){
+    e.preventDefault()
+
+    let score = document.getElementById("starsId").value 
+    let comment = document.getElementById("commentId").value
+    
+    if(comment.replace(/\s/g, "") === ""){
+            
+        let htmlContentToAppend =   `<div class="border border-danger bg-danger text-white p-3 m-1 mb-1 text-center" >
+                                Por favor, escribe un comentario valido
+                             </div>`;
+        
+        let div = document.createElement("div")
+        div.innerHTML = htmlContentToAppend;
+        document.getElementById("errorMess").innerHTML = htmlContentToAppend;
+        return false;
+    }else{
+        
+        document.getElementById("commentId").value = ""
+        document.getElementById("errorMess").innerHTML = ""
+    }
     let htmlToAppend = "";
 
     let startsToAppend = starsGenerator(score)
@@ -180,8 +196,7 @@ function postComment(score,comment){
     options = {
         year: 'numeric', month: 'numeric', day: 'numeric',
         hour: 'numeric', minute: 'numeric', second: 'numeric',
-        hour12: false,
-        
+        hour12: false,   
       };
     let dateFormated = new Intl.DateTimeFormat('en-CA', options).format(date)
 
@@ -196,23 +211,25 @@ function postComment(score,comment){
     document.getElementById("insertComments").appendChild(div)
 
 }
+//modal con carousel
+function modalFunction(){
+    let myModal = new bootstrap.Modal(document.getElementById('exampleModalToggle'), {
+    keyboard: false
+    })
+  
+    document.getElementById("toggleModal").addEventListener("click", function() {
+        myModal.show()
+    })
 
+    document.getElementById("closeModal").addEventListener("click", function() {
+    myModal.hide()
+    })
+}
 
 //cambia imagen principal de galeria
 function changeMainImage(e){
     e.classList.add("border","border-primary");
    
     document.getElementById("mainImg").src = e.src
-    
 }
 
-//funcionalidad secundaria de estilos
-function mouseEnter(e){
-    e.classList.add("border","border-primary");
-}
-
-function mouseLeave(e){
-    e.classList.remove("border");
-    e.classList.remove("border-primary");
-
-}
