@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     modalFunction()
      
 });
-
+//traer datos desde servidor
 function fetchData(){
     getJSONData(PRODUCT_INFO_URL)
     .then(function(resultObj){
@@ -34,7 +34,6 @@ function fetchData(){
         }
     })
 }
-
 
 //Muestra parte principal con galeria de imagenes y un card con info del producto
 function ShowProduct(productObj){
@@ -72,6 +71,7 @@ function ShowProduct(productObj){
 
     htmlMainImgToAppend = ` <img class="d-block w-100 rounded" id="mainImg" src="./${images[0]}">`
     
+    //carousel en el modal
     let counter = 0;
     for(image of images){
         htmlImgGroupToAppend += `<img class="d-block w-100 rounded mb-3 " onmouseenter="changeMainImage(this)"
@@ -127,7 +127,6 @@ function showDescription(description){
 
     document.getElementById("insertdescription").innerHTML = htmlToAppend;
 }
-
 
 //generador de estrellas
 function starsGenerator(score){

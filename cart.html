@@ -45,27 +45,66 @@
       <a class="py-2 d-none d-md-inline-block text-primary" id="userId"></a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 17/10/2021) y Entrega 7 (Fecha de entrega: 14/11/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <div class="container mt-5">
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Eliminar producto</th>
+          <th scope="col">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody id="tableId">
+
+      </tbody>
+    </table>
+
+    
+  
+
+    <div class="d-flex justify-content-end mb-5">
+      <div class="card shadow rounded" style="width: 20rem;">
+        <div class="card-body">
+          <h5 class="card-title">Costo Total:</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Forma de envio</h6>
+          <form action="#" id="myForm">
+            <input type="radio" id="1" name="percent" value="15" onchange="calcShipCost(this.value)">
+            <label for="1">premmium 15%</label><br>
+            <input type="radio" id="2" name="percent" value="7" onchange="calcShipCost(this.value)">
+            <label for="2">express 7%</label><br>
+            <input type="radio" id="3" name="percent" value="5" onchange="calcShipCost(this.value)">
+            <label for="3">estandar 5%</label><br><br>
+            
+          </form>
+          <p class="card-text">Costo de envio:</p>
+          <div id="shipcostId">Seleccione un metodo de envio...</div>
+
+          <p class="card-text">Costo total productos:</p>
+          <div id="subTotalId"></div>
+          <p class="card-text">Costo total productos con envio:</p>
+          <div id="shipedId"></div>
+
+        </div>
+      </div>
     </div>
-  </div>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+
+
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-  </div>
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/dropzone.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/cart.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/dropzone.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>
