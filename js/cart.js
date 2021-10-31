@@ -75,7 +75,6 @@ function restSubtotal(id){
   sum()
 }
 
-
 // suma tanto el subtotal por producto como el costo total
 function sum(){
   let precio = document.getElementsByClassName("precio")

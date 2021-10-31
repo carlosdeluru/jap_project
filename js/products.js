@@ -161,12 +161,12 @@ function showProductsList(){
         if (((minCount == undefined) || (minCount != undefined && parseInt(cost) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(cost) <= maxCount))){
         htmlContentToAppend += `
+        <div class="col-md-4">
         <a href="product-info.html" class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col-3">
+                <div class="">
                     <img src="${imgSrc}" alt="${cost}" class="img-thumbnail">
                 </div>
-                <div class="col">
+                <div class="">
                     <div class=" w-100 justify-content-between">
                         <h4 class="mb-3 search-selector">${name}</h4>
                         <p class="mb-3 search-selector">${description}</p>
@@ -174,9 +174,9 @@ function showProductsList(){
                     </div>
                     
                 </div>
-                <small class="text-muted">${soldCount} artículos vendidos</small>
-            </div>
+                <small class="text-muted">${soldCount} artículos vendidos</small>    
         </a>
+        </div>
         `}
     }
     

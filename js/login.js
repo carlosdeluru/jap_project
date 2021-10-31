@@ -12,9 +12,6 @@ document.addEventListener("DOMContentLoaded", function(e){
 
         localStorage.setItem("user",String(user))
         sessionStorage.setItem("loged","true")
-        window.location.replace("index.html")
-        
-        
-    })
-           
+        window.location.replace("index.html")  
+    })       
 });
