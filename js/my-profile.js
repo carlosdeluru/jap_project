@@ -48,7 +48,6 @@ function renderProfile(){
 
 }
 
-
 //funciones FileReader
 function handleEvent() {
     preview.src = reader.result;

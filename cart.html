@@ -14,6 +14,15 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
   <style>
+    body {
+      background: #0052D4;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #6FB1FC, #4364F7, #0052D4);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #6FB1FC, #4364F7, #0052D4);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -45,53 +54,160 @@
       <a class="py-2 d-none d-md-inline-block text-primary" id="userId"></a>
     </div>
   </nav>
-  <div class="container mt-5">
+  <div class="container mt-5 ">
+    <div class="d-flex justify-content-center my-5">
+      <div class="card col-md-4">
+        <h3 class="text-center">Bienvenido a tu carrito</h3>
+      </div>
+    </div>
 
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Descripcion</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Eliminar producto</th>
-          <th scope="col">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody id="tableId">
-
-      </tbody>
-    </table>
-
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Coste Unitario</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Sub. Total</th>
+                <th scope="col">Eliminar producto</th>
+              </tr>
+            </thead>
+            <tbody id="tableId">
+            </tbody>
+          </table>
+        </div>
+      </div>
     
-  
+      <div class="col-md-4 d-flex justify-content-end">
+        <div class="card shadow rounded" style="width: 20rem;">
+          <div class="card-body">
+            <h5 class="card-title">Costo Total:</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Forma de envio</h6>
+            <form action="#" id="myForm">
+              <input type="radio" id="1" name="percent" value="15" onchange="calcShipCost(this.value)">
+              <label for="1">premmium 15%</label><br>
+              <input type="radio" id="2" name="percent" value="7" onchange="calcShipCost(this.value)">
+              <label for="2">express 7%</label><br>
+              <input type="radio" id="3" name="percent" value="5" onchange="calcShipCost(this.value)" checked>
+              <label for="3">estandar 5%</label><br><br>
 
-    <div class="d-flex justify-content-end mb-5">
-      <div class="card shadow rounded" style="width: 20rem;">
-        <div class="card-body">
-          <h5 class="card-title">Costo Total:</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Forma de envio</h6>
-          <form action="#" id="myForm">
-            <input type="radio" id="1" name="percent" value="15" onchange="calcShipCost(this.value)">
-            <label for="1">premmium 15%</label><br>
-            <input type="radio" id="2" name="percent" value="7" onchange="calcShipCost(this.value)">
-            <label for="2">express 7%</label><br>
-            <input type="radio" id="3" name="percent" value="5" onchange="calcShipCost(this.value)">
-            <label for="3">estandar 5%</label><br><br>
-            
-          </form>
-          <p class="card-text">Costo de envio:</p>
-          <div id="shipcostId">Seleccione un metodo de envio...</div>
+            </form>
+            <p class="card-text">Costo de envio:</p>
+            <div id="shipcostId" class="">Seleccione un metodo de envio...</div>
 
-          <p class="card-text">Costo total productos:</p>
-          <div id="subTotalId"></div>
-          <p class="card-text">Costo total productos con envio:</p>
-          <div id="shipedId"></div>
+            <p class="card-text">Costo total productos:</p>
+            <div id="subTotalId"></div>
+            <p class="card-text">Costo total productos con envio:</p>
+            <div id="shipedId"></div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-block mt-3" data-toggle="modal"
+              data-target="#exampleModalCenter">
+              Checkout
+            </button>
 
+          </div>
         </div>
       </div>
     </div>
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header d-flex">
+            <h5 class="modal-title text-center mx-auto" id="exampleModalCenterTitle">Elige tu metodo de pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"  onclick="showPaymentMethods()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form action="#" id="paymentMethodsId">
+              <input type="radio" id="tarjetaMethod" name="percent" value="15" onchange="showPaymentForm('tarjeta')">
+              <label for="1"><i class="fas fa-credit-card"></i> pago tarjeta</label><br>
+              <input type="radio" id="bancMethod" name="percent" value="7" onchange="showPaymentForm('banc')">
+              <label for="2"><i class="fas fa-money-check-alt"></i> Transferencia bancaria</label><br>
+            </form>
+
+            <form class="was-validated" id="tarjetaFormId" style="display: none;">
+
+              <a href="#" onclick="showPaymentMethods()">Go back to payment Methods</a>
+              <br>
+              <label for="fname">Accepted Cards</label>
+              <div class="icon-container">
+                <i class="fab fa-cc-visa" style="color:navy;"></i>
+                <i class="fab fa-cc-amex" style="color:blue;"></i>
+                <i class="fab fa-cc-mastercard" style="color:red;"></i>
+                <i class="fab fa-cc-discover" style="color:orange;"></i>
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput">Nombre:</label>
+                <input type="text" class="form-control  is-invalid" id="formGroupExampleInput"
+                  placeholder="Example input" required>
+                <div class="invalid-feedback">
+                  Please enter a message in the textarea.
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="tarjetaId">Numbero de tarjeta:</label>
+                <input type="password" class="form-control  is-invalid" id="tarjetaId" placeholder="xxxx-xxxx-xxxx-xxxx"
+                  required>
+                <div class="invalid-feedback">
+                  Please enter a message in the textarea.
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="vencimentoId">Fecha de vencimiento:</label>
+                  <input type="date" class="form-control  is-invalid" id="vencimentoId" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="codigoId">Codigo de seguridad:</label>
+                  <input type="password" class="form-control  is-invalid" id="codigoId" placeholder="CVV" required>
+                </div>
+              </div>
+
+            </form>
+
+            <form class="was-validated" id="bancId" style="display: none;">
+              <a href="#" onclick="showPaymentMethods()">Go back to payment Methods</a>
+              <div class="form-group">
+                <label for="bancName">Nombre:</label>
+                <input type="text" class="form-control  is-invalid" id="bancName" placeholder="Tu nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="bancAccountNum">Numero de cuenta:</label>
+                <input type="password" class="form-control  is-invalid" id="bancAccountNum"
+                  placeholder="Numero de cuenta" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"  onclick="showPaymentMethods()">Cancelar</button>
+            <button type="button" class="btn btn-primary"  onclick="showPaymentMethods()">Pagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+  <footer class="text-muted bg-light mt-5">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
     <div id="spinner-wrapper">
       <div class="lds-ring">
         <div></div>
@@ -105,6 +221,7 @@
     <script src="js/dropzone.js"></script>
     <script src="js/init.js"></script>
     <script src="js/cart.js"></script>
+  
 </body>
 
 </html>
